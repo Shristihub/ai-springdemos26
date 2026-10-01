@@ -13,16 +13,7 @@ public class Employee {//the bean name is employee
 	@Autowired
 	private Address address;
 	
-	public Employee(String empName, int empId, double salary) {
-		super();
-		this.empName = empName;
-		this.empId = empId;
-		this.salary = salary;
-	}
-	public Employee() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
 	public String getEmpName() {
 		return empName;
 	}
