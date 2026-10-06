@@ -23,6 +23,7 @@ public class BookServiceImpl implements IBookService{
 
 	@Override
 	public List<Book> getAll() {
+		
 		return bookDetails.showBooks().stream()
 			.sorted(Comparator.comparing(Book::getTitle))
 			.toList();
