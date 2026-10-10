@@ -85,12 +85,12 @@ public class ProductServiceImpl implements IProductService{
 
 	@Override
 	public List<Product> getByProductNameContains(String productname) {
-		List<Product> products =  productRepository.findByPriceLessThan(price);
-		List<Product> productsByPrice = products.stream()
+		List<Product> products =  productRepository.findByProductNameContains(productname);
+		List<Product> productsByName = products.stream()
 				.sorted(Comparator.comparing(Product::getProductName)).toList();
-		if(productsByPrice.isEmpty())
+		if(productsByName.isEmpty())
 			throw new ProductNotFoundException("product with this proce not available");
-		return productsByPrice;
+		return productsByName;
 	}
 
 	@Override
