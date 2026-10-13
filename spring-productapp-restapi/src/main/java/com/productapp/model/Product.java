@@ -1,11 +1,15 @@
 package com.productapp.model;
 
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,10 +33,20 @@ public class Product {
 	private double price;  // use "price" for JPQL queries cost for "sql"
 	private int ratings;
 	
-	//Cascades says - save the child entity before saving the parent
-	@OneToOne(cascade = CascadeType.PERSIST) //save the features object before the product 
+	//Cascade says - save the child entity before saving the parent
+	@OneToOne(cascade = CascadeType.ALL) //save the features object before saving the product 
 	@JoinColumn(name = "features_id") // to give a different column name
 	private Features features;
+	
+	@OneToMany(cascade = CascadeType.ALL)//save the offers object before saving  the product
+	// removes junction table - adds product_id to offers table
+	@JoinColumn(name = "product_id") 
+	private List<Offers> offers;
+	
+	// one product in many categories
+	@ManyToMany
+	private List<Category> categories;
+	
 	
 }
 

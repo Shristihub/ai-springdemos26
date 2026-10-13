@@ -1,5 +1,9 @@
 package com.productapp.dtos;
 
+import java.util.List;
+
+import com.productapp.model.Category;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +20,12 @@ public class ProductDto {
 	private Integer productId;
 	private double price; 
 	private int ratings;
-	private FeaturesDto features;
+	private FeaturesDto features; //one to one
+	private List<OffersDto> offers; //one to many
+	private List<CategoryDto> categories; //many to many
+	
+	
+	
+	
 	
 }
