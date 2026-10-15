@@ -2,8 +2,6 @@ package com.productapp.dtos;
 
 import java.util.List;
 
-import com.productapp.model.Category;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,9 +21,9 @@ public class ProductDto {
 	private FeaturesDto features; //one to one
 	private List<OffersDto> offers; //one to many
 	private List<CategoryDto> categories; //many to many
-	
-	
-	
+	private BrandDto brand; // many to one
+	private List<String> paymentMode; 
+	private List<String> deliveryTypes;
 	
 	
 }

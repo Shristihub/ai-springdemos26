@@ -1,6 +1,5 @@
 package com.productapp.dtos;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +15,7 @@ public class CategoryDto {
 
 	private Integer categoryId;
 	private String categoryName;
-	private List<ProductDto> products;
-
+	
 
 
 }

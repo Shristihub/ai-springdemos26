@@ -17,6 +17,16 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
 	// select * from product where product_name like %name%
 	@Query("select p from Product p where p.productName like ?1")
 	List<Product> findByname(String productName);
+	
+//	List<Product> findByFeaturesColor(String color);
+	
+	//custom
+	@Query("select p from Product p inner join p.features f where f.color=?1")
+	List<Product> findByColor(String color);
+	
+	
+	
+	
 }
 
 

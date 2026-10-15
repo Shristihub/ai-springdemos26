@@ -3,12 +3,16 @@ package com.productapp.model;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -45,8 +49,29 @@ public class Product {
 	
 	// one product in many categories
 	@ManyToMany
-	private List<Category> categories;
+	// to have only one junction table
+	@JoinTable(name = "product_category",
+	          joinColumns = @JoinColumn(name="product_id"),
+	          inverseJoinColumns = @JoinColumn(name="category_id")
+			)
+	private List<Category> categories; // owner of this relationship
 	
+	//many products belong to one brand
+	@ManyToOne
+	@JoinColumn(name = "brand_id") // to give a different column name
+	private Brand brand; // owner of this relationship
+	
+	// working with List<String>
+	@ElementCollection
+	@CollectionTable(name="payment_mode",
+              joinColumns = @JoinColumn(name="product_id"))
+	private List<String> paymentMode; //COD, CARD, UPI
+	
+	@ElementCollection
+	// 2 columns 1-product_id, 2 delivery_types
+	@CollectionTable(name="delivery_type",
+	                 joinColumns = @JoinColumn(name="product_id"))
+	private List<String> deliveryTypes; //Standard, Prime, Ekart
 	
 }
 

@@ -20,6 +20,10 @@ public interface IProductService {
 	List<ProductDto> getByProductNameContains(String productname);
 	
 	List<String> getByNameHaving(String productname);
+	
+	//custom
+	List<ProductDto> getByColor(String color);
+	
 
 	
 

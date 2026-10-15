@@ -19,7 +19,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "products")
 @Entity
 public class Category {
 
@@ -30,7 +30,8 @@ public class Category {
 	@Column(length = 30)
 	private String categoryName;
 	// one category has - many products
-	@ManyToMany
+	//pass the instance variable that is the owner of this relationship
+	@ManyToMany(mappedBy = "categories")
 	private List<Product> products;
 
 
