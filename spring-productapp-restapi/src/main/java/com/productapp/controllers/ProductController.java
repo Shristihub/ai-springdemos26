@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.productapp.dtos.ProductDto;
+import com.productapp.exception.ProductNotFoundException;
 import com.productapp.service.IProductService;
 
 import lombok.AccessLevel;
@@ -44,7 +45,7 @@ public class ProductController {
 
 //	http://localhost:8081/product-api/v1/products (method is put)
 	@PutMapping("/products")
-	ResponseEntity<Void> updateProduct(@RequestBody  ProductDto productDto) {
+	ResponseEntity<Void> updateProduct(@RequestBody ProductDto productDto) {
 		productService.updateProduct(productDto);
 		// return status code 202 no body
 		return ResponseEntity.status(HttpStatus.ACCEPTED).build();
@@ -57,7 +58,6 @@ public class ProductController {
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
-	
 //	http://localhost:8081/product-api/v1/products/id/1
 	@GetMapping("/products/id/{productId}")
 	ResponseEntity<ProductDto> getById(@PathVariable int productId) {
@@ -105,4 +105,54 @@ public class ProductController {
 		// use static method to create ResponseEntity
 		return new ResponseEntity<>(productNames, headers, HttpStatus.OK.value());
 	}
+
+//	http://localhost:8081/product-api/v1/products/color/black
+	@GetMapping("/products/color/{color}")
+	ResponseEntity<List<ProductDto>> getByColor(@PathVariable String color) {
+		List<ProductDto> productDtos = productService.getByColor(color);
+		return ResponseEntity.ok().body(productDtos);
+	}
+
+//	http://localhost:8081/product-api/v1/products/offers?offerName=Bank offer
+	@GetMapping("/products/offers")
+	ResponseEntity<List<ProductDto>> getByoffers(@RequestParam String offername) {
+		List<ProductDto> productDtos = productService.getByoffers(offername);
+		return ResponseEntity.ok().body(productDtos);
+	}
+
+//	http://localhost:8081/product-api/v1/products/color/black/price/10000
+	@GetMapping("/products/color/{color}/price/{price}")
+	ResponseEntity<List<ProductDto>> getByColorAndLesserPrice(String color, double price) {
+		List<ProductDto> productDtos = productService.getByColorAndLesserPrice(color, price);
+		return ResponseEntity.ok().body(productDtos);
+	}
+//	http://localhost:8081/product-api/v1/products/category/Electronics/brand/Samsung
+	@GetMapping("/products/category/{categoryName}/brand/{brandName}")
+	ResponseEntity<List<ProductDto>> getByCategoryAndBrand(@PathVariable String categoryName,@PathVariable String brandName) {
+		List<ProductDto> productDtos = productService.getByCategoryAndBrand(categoryName, brandName);
+		return ResponseEntity.ok().body(productDtos);
+	}
+	
+//	http://localhost:8081/product-api/v1/products/delivery/Standard
+	@GetMapping("/products/delivery/{deliveryType}")
+	ResponseEntity<List<ProductDto>> getByDeliveryTypes(@PathVariable String deliveryType) {
+		List<ProductDto> productDtos = productService.getByDeliveryTypes(deliveryType);
+		return ResponseEntity.ok().body(productDtos);
+	}
+//	http://localhost:8081/product-api/v1/products/payment/UPI/delivery/Prime
+	@GetMapping("/products/payment/{payment}/delivery/{delivery}")
+	ResponseEntity<List<ProductDto>> getByPaymentAndDelivery(@PathVariable String payment,@PathVariable String delivery) {
+		List<ProductDto> productDtos = productService.getByPaymentAndDelivery(payment, delivery);
+		return ResponseEntity.ok().body(productDtos);
+	}
+	
+//	http://localhost:8081/product-api/v1/products/category/Electronics/brand/Samsung/offers/Bank Offer
+		@GetMapping("/products/category/{categoryName}/brand/{brandName}/offer/{offerName}")
+	ResponseEntity<List<ProductDto>> getByCatBrandOffer(@PathVariable String categoryName,
+			                    @PathVariable String brandName, 
+			                    @PathVariable String offerName) {
+		List<ProductDto> productDtos = productService.getByCatBrandOffer(categoryName, brandName, offerName);
+		return ResponseEntity.ok().body(productDtos);
+	}
+
 }

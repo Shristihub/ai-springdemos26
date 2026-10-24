@@ -17,12 +17,19 @@ public interface IProductService {
 
 	// derived queries
 	List<ProductDto> getByLesserPrice(double price) throws ProductNotFoundException;
-	List<ProductDto> getByProductNameContains(String productname);
+	List<ProductDto> getByProductNameContains(String productname) throws ProductNotFoundException;;
 	
-	List<String> getByNameHaving(String productname);
+	List<String> getByNameHaving(String productname)throws ProductNotFoundException;
 	
 	//custom
-	List<ProductDto> getByColor(String color);
+	List<ProductDto> getByColor(String color)throws ProductNotFoundException;
+	List<ProductDto> getByoffers(String offername)throws ProductNotFoundException;
+	List<ProductDto> getByColorAndLesserPrice(String color,double price) throws ProductNotFoundException;
+	List<ProductDto> getByCategoryAndBrand(String category, String brand) throws ProductNotFoundException;
+	List<ProductDto> getByDeliveryTypes(String delivery) throws ProductNotFoundException;
+	List<ProductDto> getByPaymentAndDelivery(String payment,String delivery) throws ProductNotFoundException;
+	List<ProductDto> getByCatBrandOffer(String category, String brand, String offerName) throws ProductNotFoundException;
+	
 	
 
 	

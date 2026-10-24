@@ -2,6 +2,7 @@ package com.productapp.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.productapp.config.ProductMapper;
@@ -48,7 +49,11 @@ public class CategoryServiceImpl implements ICategoryService{
 
 	@Override
 	public List<CategoryDto> getAll() {
-		List<CategoryDto> categoryDtos = categoryRepository.findAll()
+		//get the sorted list
+		Sort sort =  Sort.by("categoryName"); //pass the instance variable name
+		List<Category> categories = categoryRepository.findAll(sort);
+		
+		List<CategoryDto> categoryDtos = categories
 						  		.stream()
 						  		.map(category->mapper.toCategoryDto(category))
 						  		.toList();
