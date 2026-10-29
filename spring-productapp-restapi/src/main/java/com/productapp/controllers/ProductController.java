@@ -19,6 +19,7 @@ import com.productapp.dtos.ProductDto;
 import com.productapp.exception.ProductNotFoundException;
 import com.productapp.service.IProductService;
 
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -36,7 +37,7 @@ public class ProductController {
 
 //	http://localhost:8081/product-api/v1/products    (method is post)
 	@PostMapping("/products")
-	ResponseEntity<Void> addProduct(@RequestBody ProductDto productDto) {
+	ResponseEntity<Void> addProduct(@Valid @RequestBody ProductDto productDto) {
 		productService.addProduct(productDto);
 //		return status code 202 no body
 		return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -45,7 +46,7 @@ public class ProductController {
 
 //	http://localhost:8081/product-api/v1/products (method is put)
 	@PutMapping("/products")
-	ResponseEntity<Void> updateProduct(@RequestBody ProductDto productDto) {
+	ResponseEntity<Void> updateProduct(@Valid @RequestBody ProductDto productDto) {
 		productService.updateProduct(productDto);
 		// return status code 202 no body
 		return ResponseEntity.status(HttpStatus.ACCEPTED).build();
@@ -107,13 +108,13 @@ public class ProductController {
 	}
 
 //	http://localhost:8081/product-api/v1/products/color/black
-	@GetMapping("/products/color/{color}")
+	@GetMapping("/products/color/{co}")
 	ResponseEntity<List<ProductDto>> getByColor(@PathVariable String color) {
 		List<ProductDto> productDtos = productService.getByColor(color);
 		return ResponseEntity.ok().body(productDtos);
 	}
 
-//	http://localhost:8081/product-api/v1/products/offers?offerName=Bank offer
+//	http://localhost:8081/product-api/v1/products/offers?offername=Bank offer
 	@GetMapping("/products/offers")
 	ResponseEntity<List<ProductDto>> getByoffers(@RequestParam String offername) {
 		List<ProductDto> productDtos = productService.getByoffers(offername);
@@ -126,33 +127,45 @@ public class ProductController {
 		List<ProductDto> productDtos = productService.getByColorAndLesserPrice(color, price);
 		return ResponseEntity.ok().body(productDtos);
 	}
+
 //	http://localhost:8081/product-api/v1/products/category/Electronics/brand/Samsung
 	@GetMapping("/products/category/{categoryName}/brand/{brandName}")
-	ResponseEntity<List<ProductDto>> getByCategoryAndBrand(@PathVariable String categoryName,@PathVariable String brandName) {
+	ResponseEntity<List<ProductDto>> getByCategoryAndBrand(@PathVariable String categoryName,
+			@PathVariable String brandName) {
 		List<ProductDto> productDtos = productService.getByCategoryAndBrand(categoryName, brandName);
 		return ResponseEntity.ok().body(productDtos);
 	}
-	
+
 //	http://localhost:8081/product-api/v1/products/delivery/Standard
 	@GetMapping("/products/delivery/{deliveryType}")
 	ResponseEntity<List<ProductDto>> getByDeliveryTypes(@PathVariable String deliveryType) {
 		List<ProductDto> productDtos = productService.getByDeliveryTypes(deliveryType);
 		return ResponseEntity.ok().body(productDtos);
 	}
+
 //	http://localhost:8081/product-api/v1/products/payment/UPI/delivery/Prime
 	@GetMapping("/products/payment/{payment}/delivery/{delivery}")
-	ResponseEntity<List<ProductDto>> getByPaymentAndDelivery(@PathVariable String payment,@PathVariable String delivery) {
+	ResponseEntity<List<ProductDto>> getByPaymentAndDelivery(@PathVariable String payment,
+			@PathVariable String delivery) {
 		List<ProductDto> productDtos = productService.getByPaymentAndDelivery(payment, delivery);
 		return ResponseEntity.ok().body(productDtos);
 	}
-	
+
 //	http://localhost:8081/product-api/v1/products/category/Electronics/brand/Samsung/offers/Bank Offer
-		@GetMapping("/products/category/{categoryName}/brand/{brandName}/offer/{offerName}")
+	@GetMapping("/products/category/{categoryName}/brand/{brandName}/offer/{offerName}")
 	ResponseEntity<List<ProductDto>> getByCatBrandOffer(@PathVariable String categoryName,
-			                    @PathVariable String brandName, 
-			                    @PathVariable String offerName) {
+			@PathVariable String brandName, @PathVariable String offerName) {
 		List<ProductDto> productDtos = productService.getByCatBrandOffer(categoryName, brandName, offerName);
 		return ResponseEntity.ok().body(productDtos);
+	}
+
+	// pagination
+//	http://localhost:8081/product-api/v1/products/page/1/item/3
+	@GetMapping("/products/page/{pageno}/item/{itemcount}")
+	ResponseEntity<List<ProductDto>> getAllProducts(@PathVariable int pageno, @PathVariable int itemcount) {
+		List<ProductDto> productDtos = productService.getAllProducts(pageno, itemcount);
+		return ResponseEntity.ok().body(productDtos);
+
 	}
 
 }

@@ -3,6 +3,9 @@ package com.productapp.service;
 import java.util.Comparator;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -144,6 +147,18 @@ public class ProductServiceImpl implements IProductService {
 		if (products.isEmpty())
 			throw new ProductNotFoundException("product with this category,brand,offername not found");
 		return products.stream().map(product -> mapper.toProductDto(product)).toList();
+	}
+
+	@Override
+	public List<ProductDto> getAllProducts(int pageNo, int itemcount) {
+		
+		// pagenumber, no of items to be shown, sorting by
+		Pageable pageref = PageRequest.of(pageNo, itemcount); 
+//		Pageable pageref = PageRequest.of(pageNo, itemcount, Sort.by("productName")); 
+		Page<Product> products = productRepository.findAll(pageref);
+		// convert list of products to list of dtos
+		return products.stream().map(product -> mapper.toProductDto(product)).toList();
+		
 	}
 
 }

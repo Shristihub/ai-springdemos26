@@ -21,6 +21,8 @@ public interface IProductService {
 	
 	List<String> getByNameHaving(String productname)throws ProductNotFoundException;
 	
+	//pagination
+	List<ProductDto> getAllProducts(int pageNo, int itemcount);
 	//custom
 	List<ProductDto> getByColor(String color)throws ProductNotFoundException;
 	List<ProductDto> getByoffers(String offername)throws ProductNotFoundException;

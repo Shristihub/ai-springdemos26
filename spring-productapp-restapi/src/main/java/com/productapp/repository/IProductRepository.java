@@ -30,7 +30,7 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
 	//use native query
 	@Query(value=
 			"""
-			select p from product p inner join p.offers o where o.offer_name=?1
+			select * from product p join  offers o where o.offer_name=?1
 			""",
 			nativeQuery = true)
 	List<Product> findByoffers(String offername);

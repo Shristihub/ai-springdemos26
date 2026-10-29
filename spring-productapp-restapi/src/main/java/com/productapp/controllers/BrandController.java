@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.productapp.dtos.BrandDto;
 import com.productapp.service.IBrandService;
 
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,7 +25,7 @@ public class BrandController {
 		
 //	http://localhost:8081/product-api/v1/brands    (method is post)
 	@PostMapping("/brands")
-	ResponseEntity<Void> addBrand(@RequestBody BrandDto brandDto) {
+	ResponseEntity<Void> addBrand(@Valid @RequestBody BrandDto brandDto) {
 		brandService.addBrand(brandDto);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
